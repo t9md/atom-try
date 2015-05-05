@@ -4,29 +4,39 @@ _ = require 'underscore-plus'
 
 expandPath = (str) ->
   if str.substr(0, 2) == '~/'
-    str = (process.env.HOME || process.env.HOMEPATH || process.env.HOMEDIR || process.cwd()) + str.substr(1);
+    str = (process.env.HOME or process.env.HOMEPATH or process.env.HOMEDIR or process.cwd()) + str.substr(1);
   path.resolve str
+
+Config =
+  root:
+    type: 'string'
+    default: path.join(atom.config.get('core.projectHome'), "try")
+    description: "Root directory of your try buffer"
+  basename:
+    type: 'string'
+    default: 'try'
+    description: "Basename of try buffer"
+  pasteTo:
+    type: 'string'
+    default: "bottom"
+    enum: ["bottom", "top", "here"]
+    description: "Where selected text is pasted."
+  select:
+    type: 'boolean'
+    default: true
+    description: "Select pasted text"
+  autoIndent:
+    type: 'boolean'
+    default: false
+    description: "Indent pasted text"
+  autosave:
+    type: 'boolean'
+    default: true
+    description: "Autosave for try buffer"
 
 module.exports =
   subscriptions: null
-
-  config:
-    root:
-      type: 'string'
-      default: path.join(atom.config.get('core.projectHome'), "try")
-      description: "Root directory of your try buffer"
-    basename:
-      type: 'string'
-      default: 'try'
-      description: "Basename of try buffer"
-    pasteToBottom:
-      type: 'boolean'
-      default: true
-      description: "Paste to bottom of try buffer"
-    autosave:
-      type: 'boolean'
-      default: true
-      description: "Autosave for try buffer"
+  config: Config
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
@@ -53,7 +63,8 @@ module.exports =
       extname = path.extname editor.getPath()
 
     rootDir = expandPath atom.config.get('try.root')
-    path.join rootDir, "#{atom.config.get('try.basename')}#{extname}"
+    basename = atom.config.get('try.basename')
+    path.join rootDir, "#{basename}#{extname}"
 
   paste: ->
     editor = atom.workspace.getActiveTextEditor()
@@ -71,5 +82,13 @@ module.exports =
           return unless item.isModified?()
           item.save()
 
-      editor.moveToBottom() if atom.config.get('try.pasteToBottom')
-      editor.insertText(text)
+      pasteTo = atom.config.get('try.pasteTo')
+      if pasteTo is "top"
+        editor.moveToTop()
+      else if pasteTo is "bottom"
+        editor.moveToBottom()
+
+      options =
+        select: atom.config.get('try.select')
+        autoIndent: atom.config.get('try.autoIndent')
+      editor.insertText text, options

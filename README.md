@@ -22,7 +22,7 @@ This package improve your repetitive copy and paste workflow into one step.
 # How to use
 
 Select text in editor then
-- Invoke `try:paste`.
+- Invoke `try:paste` via command palette or keymap.
 - Chose `Paste to Try` from context menu.
 
 # Keymap
@@ -34,7 +34,7 @@ e.g.
 
 ```coffeescript
 'atom-text-editor:not([mini])':
-  'f10':       'try:paste'
+  'f10': 'try:paste'
 ```
 
 * if you are using  [vim-mode](https://atom.io/packages/vim-mode)
@@ -49,6 +49,5 @@ e.g.
 Leave comment on [Improve scope 2 extname mapping](https://github.com/t9md/atom-try/issues/1).
 
 # TODO
-
-- highlight pasted text on try buffer
-- improve coverage of `scope2extname`.
+- [x] highlight pasted text on try buffer
+- [ ] improve coverage of `scope2extname`.
