@@ -5,6 +5,11 @@
   "description": "Paste fragment of code into try buffer then try it!",
   "repository": "https://github.com/t9md/atom-try",
   "license": "MIT",
+  "activationCommands": {
+    "atom-workspace": [
+      "try:paste"
+    ]
+  },
   "engines": {
     "atom": ">=0.174.0 <2.0.0"
   },
