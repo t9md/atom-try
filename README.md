@@ -17,10 +17,11 @@ This package improve your repetitive copy and paste workflow into one step.
 - Autosave try buffer.
 - Use scope at cursor position to support nested scope like CoffeeScript in Markdown.
 
-# TODO
+# How to use
 
-- highlight pasted text on try buffer
-- improve coverage of `scope2extname`.
+Select text in editor then
+- Invoke `try:paste`.
+- Chose `Paste to Try` from context menu.
 
 # Keymap
 No keymap by default.
@@ -40,3 +41,8 @@ e.g.
 'atom-text-editor.vim-mode.visual-mode':
   'space t': 'try:paste'
 ```
+
+# TODO
+
+- highlight pasted text on try buffer
+- improve coverage of `scope2extname`.

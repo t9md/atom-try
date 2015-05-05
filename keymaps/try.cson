@@ -1,0 +1,9 @@
+# https://atom.io/docs/latest/behind-atom-keymaps-in-depth
+
+# with F11
+# 'atom-text-editor:not([mini])':
+#   'f10':       'try:paste'
+
+# with 'sapace t' in vim-mode.visual-mode.
+# 'atom-text-editor.vim-mode.visual-mode':
+#   'space t': 'try:paste'
