@@ -42,6 +42,10 @@ e.g.
   'space t': 'try:paste'
 ```
 
+# To improve scope2extname.
+
+Leave comment on [Improve scope 2 extname mapping](https://github.com/t9md/atom-try/issues/1).
+
 # TODO
 
 - highlight pasted text on try buffer
