@@ -1,6 +1,8 @@
 # Try
 Paste fragment of code into try buffer then try it!
 
+![gif](https://raw.githubusercontent.com/t9md/t9md/12fba4ff60861ae1acd973407c93a62edf61c956/img/atom-try.gif)
+
 # Why?
 While I'm reading code and encounter the code which I can't understand how it works.  
 What I should do in such situation is **try** that code and see how it works.  
