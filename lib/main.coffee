@@ -16,6 +16,10 @@ Config =
     type: 'string'
     default: 'try'
     description: "Basename of try buffer"
+  clearSelection:
+    type: 'boolean'
+    default: true
+    description: "Clear original selection"
   pasteTo:
     type: 'string'
     default: "bottom"
@@ -67,9 +71,8 @@ module.exports =
     path.join rootDir, "#{basename}#{extname}"
 
   paste: ->
-    editor = atom.workspace.getActiveTextEditor()
-    text   = editor.getSelectedText()
-    return unless text
+    editor    = atom.workspace.getActiveTextEditor()
+    selection = editor.getSelection()
 
     atom.workspace.open(@getURIFor(editor), split: 'right', searchAllPanes: true).done (editor) =>
       if atom.config.get('try.autosave')
@@ -82,13 +85,13 @@ module.exports =
           return unless item.isModified?()
           item.save()
 
-      pasteTo = atom.config.get('try.pasteTo')
-      if pasteTo is "top"
-        editor.moveToTop()
-      else if pasteTo is "bottom"
-        editor.moveToBottom()
+      switch atom.config.get('try.pasteTo')
+        when 'top'    then editor.moveToTop()
+        when 'bottom' then editor.moveToBottom()
 
-      options =
-        select: atom.config.get('try.select')
-        autoIndent: atom.config.get('try.autoIndent')
-      editor.insertText text, options
+      unless selection.isEmpty()
+        editor.insertText selection.getText(),
+          select: atom.config.get('try.select')
+          autoIndent: atom.config.get('try.autoIndent')
+
+        selection.clear() if atom.config.get('try.clearSelection')

@@ -1,3 +1,7 @@
+## 0.2.1 - imporove
+* Now `try:paste` open try buffer even if selection is empty
+* New option `try.clearSelection` to clear original selection, default true.
+
 ## 0.2.0 - imporove
 * `select` option (default: true)
 * `autoIndent` option (default: false)

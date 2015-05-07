@@ -37,11 +37,13 @@ e.g.
   'f10': 'try:paste'
 ```
 
-* if you are using  [vim-mode](https://atom.io/packages/vim-mode)
+* if you are using  [vim-mode](https://atom.io/packages/vim-mode), following are suggestion which I use.
 
 ```coffeescript
-'atom-text-editor.vim-mode.visual-mode':
+'atom-text-editor.vim-mode.command-mode':
   'space t': 'try:paste'
+'atom-text-editor.vim-mode.visual-mode':
+  'T': 'try:paste'
 ```
 
 # To improve scope2extname.
