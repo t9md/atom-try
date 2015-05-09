@@ -1,3 +1,7 @@
+## 0.2.2 - imporove
+* New option `try.split` where to open try buffer. default 'none'
+* New option `try.searchAllPanes` to open existing buffer.
+
 ## 0.2.1 - imporove
 * Now `try:paste` open try buffer even if selection is empty
 * New option `try.clearSelection` to clear original selection, default true.

@@ -37,6 +37,15 @@ Config =
     type: 'boolean'
     default: true
     description: "Autosave for try buffer"
+  split:
+    type: 'string'
+    default: 'none'
+    enum: ["none", "left", "right" ]
+    description: "Where try buffer opend"
+  searchAllPanes:
+    type: 'boolean'
+    default: false
+    description: "Open existing try buffer if exists"
 
 module.exports =
   subscriptions: null
@@ -74,7 +83,11 @@ module.exports =
     editor    = atom.workspace.getActiveTextEditor()
     selection = editor.getSelection()
 
-    atom.workspace.open(@getURIFor(editor), split: 'right', searchAllPanes: true).done (editor) =>
+    options = searchAllPanes: atom.config.get('try.searchAllPanes')
+    if atom.config.get('try.split') isnt 'none'
+      options.split = atom.config.get 'try.split'
+
+    atom.workspace.open(@getURIFor(editor), options).done (editor) =>
       if atom.config.get('try.autosave')
         pane = atom.workspace.getActivePane()
 
