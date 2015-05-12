@@ -55,12 +55,22 @@ module.exports =
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
       'try:paste': => @paste()
+      'try:detect-cursor-scope': => @detectCursorScope()
 
   deactivate: ->
     @subscriptions.dispose()
 
   serialize: ->
 
+  detectCursorScope: ->
+    cursor = @getActiveTextEditor().getCursor()
+    scopesArray = cursor.getScopeDescriptor().getScopesArray()
+    scope = _.detect scopesArray.reverse(), (scope) ->
+      scope.indexOf('source.') is 0
+    scope ?= _.last(scopesArray)
+    scope
+
+  # Deperecate
   getURIFor: (editor) ->
     # We need handle nested sope like coffeescript in markdown,
     # so use deepest scope information on Cursor.
@@ -79,21 +89,59 @@ module.exports =
     basename = atom.config.get('try.basename')
     path.join rootDir, "#{basename}#{extname}"
 
+  instanceEval: (self, callback) ->
+    callback.bind(self)()
+
+  with: (self, callback) ->
+    callback(self)
+
+  overrideGrammarForPath: (filePath, scopeName) ->
+    # Experiment-1
+    # @instanceEval atom.grammars, ->
+    #   @clearGrammarOverrideForPath filePath
+    #   @setGrammarOverrideForPath filePath, scopeName
+
+    # Experiment-2
+    # @with atom.grammars, (self) ->
+    #   self.clearGrammarOverrideForPath filePath
+    #   self.setGrammarOverrideForPath filePath, scopeName
+
+    # Experiment-3
+    # (->
+    #   @clearGrammarOverrideForPath filePath
+    #   @setGrammarOverrideForPath filePath, scopeName)
+    #   .bind(atom.grammars)()
+
+    atom.grammars.clearGrammarOverrideForPath filePath
+    atom.grammars.setGrammarOverrideForPath filePath, scopeName
+
+  getActiveTextEditor: ->
+    atom.workspace.getActiveTextEditor()
+
+  getFilePath: (scopeName) ->
+    rootDir  = expandPath atom.config.get('try.root')
+    basename = atom.config.get('try.basename')
+    path.join rootDir, "#{basename}.#{scopeName}"
+
   paste: ->
-    editor    = atom.workspace.getActiveTextEditor()
+    editor    = @getActiveTextEditor()
     selection = editor.getSelection()
+    scopeName = @detectCursorScope()
+    filePath = @getFilePath scopeName
+    @overrideGrammarForPath filePath, scopeName
 
     options = searchAllPanes: atom.config.get('try.searchAllPanes')
     if atom.config.get('try.split') isnt 'none'
       options.split = atom.config.get 'try.split'
 
-    atom.workspace.open(@getURIFor(editor), options).done (editor) =>
+    atom.workspace.open(filePath, options).done (editor) =>
       if atom.config.get('try.autosave')
         pane = atom.workspace.getActivePane()
 
         # [FIXME] auto-save event is bounded only this pane, so when we manually
         # split pane, auto-save won't invoked for that pane.
         # I need, buffer.onWillDestroy().
+        # [BUG] Check if other file in this pane affect!!
         @subscriptions.add pane.onWillDestroyItem ({item})->
           return unless item.isModified?()
           item.save()
