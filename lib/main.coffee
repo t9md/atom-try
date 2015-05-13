@@ -33,10 +33,6 @@ Config =
     type: 'boolean'
     default: false
     description: "Indent pasted text"
-  autosave:
-    type: 'boolean'
-    default: true
-    description: "Autosave for try buffer"
   split:
     type: 'string'
     default: 'none'
@@ -50,84 +46,61 @@ Config =
 module.exports =
   subscriptions: null
   config: Config
+  grammarOverriddenPaths: {}
 
   activate: (state) ->
     @subscriptions = new CompositeDisposable
     @subscriptions.add atom.commands.add 'atom-workspace',
       'try:paste': => @paste()
-      'try:detect-cursor-scope': => @detectCursorScope()
 
   deactivate: ->
     @subscriptions.dispose()
+    for filePath of @grammarOverriddenPaths
+      atom.grammars.clearGrammarOverrideForPath filePath
 
   serialize: ->
 
+  getSupportedScopeNames: ->
+    atom.grammars.getGrammars().map (g) -> g.scopeName
+
   detectCursorScope: ->
+    supportedScopeNames = @getSupportedScopeNames()
+
     cursor = @getActiveTextEditor().getCursor()
     scopesArray = cursor.getScopeDescriptor().getScopesArray()
     scope = _.detect scopesArray.reverse(), (scope) ->
-      scope.indexOf('source.') is 0
-    scope ?= _.last(scopesArray)
+      scope in supportedScopeNames
     scope
 
-  # Deperecate
-  getURIFor: (editor) ->
-    # We need handle nested sope like coffeescript in markdown,
-    # so use deepest scope information on Cursor.
-    scopes = editor.getCursor().getScopeDescriptor().getScopesArray()
-    extname = path.extname _.last(scopes)
-
-    if scope2extname[extname.substring(1)]?
-      # do some translation from scope name to common extname.
-      extname = scope2extname[extname.substring(1)]
-
-    if extname is '.null-grammar'
-      # fallback to filename's extention.
-      extname = path.extname editor.getPath()
-
-    rootDir = expandPath atom.config.get('try.root')
-    basename = atom.config.get('try.basename')
-    path.join rootDir, "#{basename}#{extname}"
-
-  instanceEval: (self, callback) ->
-    callback.bind(self)()
-
-  with: (self, callback) ->
-    callback(self)
-
   overrideGrammarForPath: (filePath, scopeName) ->
-    # Experiment-1
-    # @instanceEval atom.grammars, ->
-    #   @clearGrammarOverrideForPath filePath
-    #   @setGrammarOverrideForPath filePath, scopeName
-
-    # Experiment-2
-    # @with atom.grammars, (self) ->
-    #   self.clearGrammarOverrideForPath filePath
-    #   self.setGrammarOverrideForPath filePath, scopeName
-
-    # Experiment-3
-    # (->
-    #   @clearGrammarOverrideForPath filePath
-    #   @setGrammarOverrideForPath filePath, scopeName)
-    #   .bind(atom.grammars)()
-
+    return if @grammarOverriddenPaths[filePath] is scopeName
     atom.grammars.clearGrammarOverrideForPath filePath
     atom.grammars.setGrammarOverrideForPath filePath, scopeName
+    @grammarOverriddenPaths[filePath] = scopeName
 
   getActiveTextEditor: ->
     atom.workspace.getActiveTextEditor()
 
-  getFilePath: (scopeName) ->
+  determineFilePath: (scopeName, URI) ->
     rootDir  = expandPath atom.config.get('try.root')
     basename = atom.config.get('try.basename')
-    path.join rootDir, "#{basename}.#{scopeName}"
+
+    # Strategy
+    # Determine appropriate filename extension in following order.
+    #  1. check scope2extname table
+    #  2. use original filename's extension
+    #  3. if extname is empty, use scopeName itself.
+    ext  = scope2extname[scopeName]
+    ext ?= (path.extname URI).substr(0)
+    ext ?= scopeName
+    path.join rootDir, "#{basename}.#{ext}"
 
   paste: ->
     editor    = @getActiveTextEditor()
+    URI       = editor.getURI()
     selection = editor.getSelection()
     scopeName = @detectCursorScope()
-    filePath = @getFilePath scopeName
+    filePath  = @determineFilePath scopeName, URI
     @overrideGrammarForPath filePath, scopeName
 
     options = searchAllPanes: atom.config.get('try.searchAllPanes')
@@ -135,17 +108,6 @@ module.exports =
       options.split = atom.config.get 'try.split'
 
     atom.workspace.open(filePath, options).done (editor) =>
-      if atom.config.get('try.autosave')
-        pane = atom.workspace.getActivePane()
-
-        # [FIXME] auto-save event is bounded only this pane, so when we manually
-        # split pane, auto-save won't invoked for that pane.
-        # I need, buffer.onWillDestroy().
-        # [BUG] Check if other file in this pane affect!!
-        @subscriptions.add pane.onWillDestroyItem ({item})->
-          return unless item.isModified?()
-          item.save()
-
       switch atom.config.get('try.pasteTo')
         when 'top'    then editor.moveToTop()
         when 'bottom' then editor.moveToBottom()

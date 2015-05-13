@@ -8,7 +8,6 @@
   "activationCommands": {
     "atom-workspace": [
       "try:paste",
-      "try:detect-cursor-scope"
     ]
   },
   "engines": {

@@ -1,3 +1,8 @@
+## 0.2.3 - imporove
+* scope2extname coverage is now OK.
+* [FIX] scope determination is now precise.
+* [DEPRECATE] deprecate `autosave` option, its difficult to handle.
+
 ## 0.2.2 - imporove
 * New option `try.split` where to open try buffer. default 'none'
 * New option `try.searchAllPanes` to open existing buffer.

@@ -16,8 +16,8 @@ This package improve your repetitive copy and paste workflow into one step.
 # Features
 
 - Paste selected text to bottom of try buffer by default.
-- Autosave try buffer.
 - Use scope at cursor position to support nested scope like CoffeeScript in Markdown.
+
 
 # How to use
 
