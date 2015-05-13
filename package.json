@@ -7,7 +7,7 @@
   "license": "MIT",
   "activationCommands": {
     "atom-workspace": [
-      "try:paste",
+      "try:paste"
     ]
   },
   "engines": {
