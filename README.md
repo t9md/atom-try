@@ -9,15 +9,16 @@ What I should do in such situation is **try** that code and see how it works.
 This package improve your repetitive copy and paste workflow into one step.
 
 1. Select buffer
-2. Incoke `try:paste` command.
+2. Invoke `try:paste` command.
 3. Your selected code is pasted at bottom of try buffer.
 4. Start try&see by running script runner package like [script](https://atom.io/packages/script).
 
 # Features
 
-- Paste selected text to bottom of try buffer by default.
-- Use scope at cursor position to support nested scope like CoffeeScript in Markdown.
-
+- Paste selected text to bottom of `try` buffer by default.
+- Without selection, simply open `try` buffer.
+- `try` buffer is merely simple file, not special scratch buffer.
+- Detect grammar from scope of cursor position(e.g. CoffeeScript in Markdown), this ensure you got precise `try` buffer grammar.
 
 # How to use
 
@@ -46,10 +47,6 @@ e.g.
   'T': 'try:paste'
 ```
 
-# To improve scope2extname.
-
-Leave comment on [Improve scope 2 extname mapping](https://github.com/t9md/atom-try/issues/1).
-
 # TODO
 - [x] highlight pasted text on try buffer
-- [ ] improve coverage of `scope2extname`.
+- [x] improve coverage of `scope2extname`.
