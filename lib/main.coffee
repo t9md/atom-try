@@ -1,6 +1,8 @@
 {CompositeDisposable} = require 'atom'
+_    = require 'underscore-plus'
+path = require 'path'
+
 scope2extname = require './scope2extname'
-_ = require 'underscore-plus'
 
 expandPath = (str) ->
   if str.substr(0, 2) == '~/'
