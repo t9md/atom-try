@@ -63,7 +63,7 @@ module.exports =
   serialize: ->
 
   getSupportedScopeNames: ->
-    atom.grammars.getGrammars().map (g) -> g.scopeName
+    atom.grammars.getGrammars().map (grammar) -> grammar.scopeName
 
   detectCursorScope: ->
     supportedScopeNames = @getSupportedScopeNames()
@@ -89,9 +89,9 @@ module.exports =
 
     # Strategy
     # Determine appropriate filename extension in following order.
-    #  1. check scope2extname table
-    #  2. use original filename's extension
-    #  3. if extname is empty, use scopeName itself.
+    #  1. From scope2extname table
+    #  2. Original filename's extension
+    #  3. ScopeName itself.
     ext  = scope2extname[scopeName]
     ext ?= (path.extname URI).substr(0)
     ext ?= scopeName
