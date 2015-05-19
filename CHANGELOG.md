@@ -1,3 +1,6 @@
+## 0.2.4 - imporove
+* Add configuration order.
+
 ## 0.2.3 - imporove
 * scope2extname coverage is now OK.
 * [FIX] scope determination is now precise.
