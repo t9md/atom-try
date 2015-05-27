@@ -76,7 +76,7 @@ module.exports =
   detectCursorScope: ->
     supportedScopeNames = @getSupportedScopeNames()
 
-    cursor = @getActiveTextEditor().getCursor()
+    cursor = @getActiveTextEditor().getLastCursor()
     scopesArray = cursor.getScopeDescriptor().getScopesArray()
     scope = _.detect scopesArray.reverse(), (scope) ->
       scope in supportedScopeNames
@@ -108,7 +108,7 @@ module.exports =
   paste: ->
     editor    = @getActiveTextEditor()
     URI       = editor.getURI()
-    selection = editor.getSelection()
+    selection = editor.getLastSelection()
     scopeName = @detectCursorScope()
     filePath  = @determineFilePath scopeName, URI
     @overrideGrammarForPath filePath, scopeName

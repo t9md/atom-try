@@ -1,4 +1,5 @@
-## 0.2.4 - imporove
+## 0.2.4 - Imporove
+* Fix deprecated API.Prep for Atom 1.0 API
 * Add configuration order.
 
 ## 0.2.3 - imporove
