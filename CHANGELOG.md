@@ -1,3 +1,6 @@
+## 0.2.5 - Remove Spec
+* Since its not used.
+
 ## 0.2.4 - Imporove
 * Fix deprecated API.Prep for Atom 1.0 API
 * Add configuration order.
