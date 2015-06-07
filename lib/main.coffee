@@ -71,6 +71,7 @@ module.exports =
     if settings.get('split') isnt 'none'
       options.split = settings.get 'split'
 
+    atom.workspace.open(filePath, options).done (editor) =>
       switch settings.get 'pasteTo'
         when 'top'    then editor.moveToTop()
         when 'bottom' then editor.moveToBottom()
