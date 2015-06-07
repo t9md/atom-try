@@ -1,5 +1,7 @@
-## 0.2.5 - Remove Spec
-* Since its not used.
+## 0.2.5 - Improve
+* Remove spec, its not used.
+* Use atom-config-plus
+* Separate config as settings.coffee
 
 ## 0.2.4 - Imporove
 * Fix deprecated API.Prep for Atom 1.0 API
