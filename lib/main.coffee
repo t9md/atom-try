@@ -28,13 +28,13 @@ module.exports =
       grammar.scopeName
 
   detectCursorScope: ->
-    supportedScopeNames = @getSupportedScopeNames()
-
-    cursor = @getActiveTextEditor().getLastCursor()
-    scopesArray = cursor.getScopeDescriptor().getScopesArray()
-    scope = _.detect scopesArray.reverse(), (scope) ->
-      scope in supportedScopeNames
-    scope
+    editor = @getEditor()
+    [rowStart, rowEnd] = editor.getLastSelection().getBufferRowRange()
+    scopeDescriptor = editor.scopeDescriptorForBufferPosition([rowStart, 0])
+    scopeNames = scopeDescriptor.getScopesArray().slice().reverse()
+    for scopeName in scopeNames when scopeName in @getSupportedScopeNames()
+      return scopeName
+    null
 
   overrideGrammarForPath: (filePath, scopeName) ->
     return if @grammarOverriddenPaths[filePath] is scopeName
@@ -42,7 +42,7 @@ module.exports =
     atom.grammars.setGrammarOverrideForPath filePath, scopeName
     @grammarOverriddenPaths[filePath] = scopeName
 
-  getActiveTextEditor: ->
+  getEditor: ->
     atom.workspace.getActiveTextEditor()
 
   determineFilePath: (scopeName, URI) ->
@@ -60,7 +60,7 @@ module.exports =
     path.join rootDir, "#{basename}.#{ext}"
 
   paste: ->
-    editor    = @getActiveTextEditor()
+    editor    = @getEditor()
     URI       = editor.getURI()
     selection = editor.getLastSelection()
     scopeName = @detectCursorScope()

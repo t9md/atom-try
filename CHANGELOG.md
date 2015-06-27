@@ -1,3 +1,6 @@
+## 0.2.6 - Improve
+* More precise cursor scope detection.
+
 ## 0.2.5 - Improve
 * Remove spec, its not used.
 * Use atom-config-plus
