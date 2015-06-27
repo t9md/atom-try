@@ -1,3 +1,6 @@
+## [PRE] 0.2.7 - Improve
+* ?
+
 ## 0.2.6 - Improve
 * More precise cursor scope detection.
 
