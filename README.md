@@ -41,7 +41,7 @@ e.g.
 * if you are using  [vim-mode](https://atom.io/packages/vim-mode), following are suggestion which I use.
 
 ```coffeescript
-'atom-text-editor.vim-mode.command-mode':
+'atom-text-editor.vim-mode.normal-mode':
   'space t': 'try:paste'
 'atom-text-editor.vim-mode.visual-mode':
   'T': 'try:paste'

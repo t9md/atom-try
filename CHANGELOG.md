@@ -1,5 +1,5 @@
-## [PRE] 0.2.7 - Improve
-* ?
+## 0.2.7 - Improve
+* Update readme to follow vim-mode's command-mode to normal-mode
 
 ## 0.2.6 - Improve
 * More precise cursor scope detection.
