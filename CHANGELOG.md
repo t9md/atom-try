@@ -1,3 +1,6 @@
+## 0.2.8 - FIX
+* Fix deprecation warn from Atom v1.1.0.
+
 ## 0.2.7 - Improve
 * Update readme to follow vim-mode's command-mode to normal-mode
 
