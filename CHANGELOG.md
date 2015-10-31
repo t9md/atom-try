@@ -10,7 +10,7 @@
 * Use atom-config-plus
 * Separate config as settings.coffee
 
-## 0.2.4 - Imporove
+## 0.2.4 - Improve
 * Fix deprecated API.Prep for Atom 1.0 API
 * Add configuration order.
 
