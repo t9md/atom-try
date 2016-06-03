@@ -1,7 +1,21 @@
-path       = require 'path'
-ConfigPlus = require 'atom-config-plus'
+path = require 'path'
 
-config =
+class Settings
+  constructor: (@scope, @config) ->
+
+  get: (param) ->
+    atom.config.get "#{@scope}.#{param}"
+
+  set: (param, value) ->
+    atom.config.set "#{@scope}.#{param}", value
+
+  toggle: (param) ->
+    @set(param, not @get(param))
+
+  observe: (param, fn) ->
+    atom.config.observe "#{@scope}.#{param}", fn
+
+module.exports = new Settings 'try',
   root:
     order: 1
     type: 'string'
@@ -44,5 +58,3 @@ config =
     type: 'boolean'
     default: false
     description: "Open existing try buffer if exists"
-
-module.exports = new ConfigPlus 'try', config

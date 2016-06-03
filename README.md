@@ -1,5 +1,5 @@
 # Try
-Paste fragment of code into try buffer then try it!
+Paste texts to predetermined place.
 
 ![gif](https://raw.githubusercontent.com/t9md/t9md/12fba4ff60861ae1acd973407c93a62edf61c956/img/atom-try.gif)
 
@@ -20,11 +20,14 @@ This package improve your repetitive copy and paste workflow into one step.
 - `try` buffer is merely simple file, not special scratch buffer.
 - Detect grammar from scope of cursor position(e.g. CoffeeScript in Markdown), this ensure you got precise `try` buffer grammar.
 
+# Commands
+- `try:paste`: paste to try file.
+- `try:open-file`: open try file by reading extension from user interactively.
+
 # How to use
 
 Select text in editor then
 - Invoke `try:paste` via command palette or keymap.
-- Chose `Paste to Try` from context menu.
 
 # Keymap
 No keymap by default.
@@ -38,15 +41,12 @@ e.g.
   'f10': 'try:paste'
 ```
 
-* if you are using  [vim-mode](https://atom.io/packages/vim-mode), following are suggestion which I use.
+* if you are using  [vim-mode-plus](https://atom.io/packages/vim-mode-plus), following are suggestion which I use.
 
 ```coffeescript
-'atom-text-editor.vim-mode.normal-mode':
-  'space t': 'try:paste'
+'atom-text-editor.vim-mode-plus.normal-mode':
+  'space T': 'try:open-file'
+  'T': 'try:paste'
 'atom-text-editor.vim-mode.visual-mode':
   'T': 'try:paste'
 ```
-
-# TODO
-- [x] highlight pasted text on try buffer
-- [x] improve coverage of `scope2extname`.
