@@ -1,3 +1,6 @@
+## 0.4.0
+- Fix: When extension is not found in scope2extname table, it add unnecessary extra `.` as extension.
+
 ## 0.3.0
 - Open try file adjacentPane if available
 - new `try:open-file` command which allows to specify file extension.

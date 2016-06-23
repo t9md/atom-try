@@ -65,7 +65,7 @@ module.exports =
     #  2. Original filename's extension
     #  3. ScopeName itself.
     ext = scope2extname[scopeName]
-    ext ?= (path.extname URI).substr(0)
+    ext ?= (path.extname URI).substr(1)
     ext ?= scopeName
     path.join(rootDir, "#{basename}.#{ext}")
 

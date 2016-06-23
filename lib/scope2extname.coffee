@@ -55,3 +55,4 @@ module.exports =
   'text.xml.xsl': 'xsl'
   'source.yaml': 'yaml'
   'source.lua': 'lua'
+  'source.haskell': 'hs'
