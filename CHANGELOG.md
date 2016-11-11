@@ -1,5 +1,6 @@
 ## 0.5.0
 - Fix: Deprecation warning calling old `GrammarRegistry.setGrammarOverrideForPath` #2
+- New: Support new split direction(`up` and `down`).
 
 ## 0.4.0
 - Fix: When extension is not found in scope2extname table, it add unnecessary extra `.` as extension.
