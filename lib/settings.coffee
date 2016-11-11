@@ -51,7 +51,7 @@ module.exports = new Settings 'try',
     order: 7
     type: 'string'
     default: 'none'
-    enum: ["none", "left", "right" ]
+    enum: ["none", "left", "right", "up", "down"]
     description: "Where try buffer opend"
   searchAllPanes:
     order: 8

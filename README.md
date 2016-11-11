@@ -4,7 +4,8 @@ Paste texts to predetermined place.
 ![gif](https://raw.githubusercontent.com/t9md/t9md/12fba4ff60861ae1acd973407c93a62edf61c956/img/atom-try.gif)
 
 # Why?
-While I'm reading code and encounter the code which I can't understand how it works.  
+
+While I'm reading code and encounter the code which I can not understand how it works.  
 What I should do in such situation is **try** that code and see how it works.  
 This package improve your repetitive copy and paste workflow into one step.
 
@@ -18,7 +19,6 @@ This package improve your repetitive copy and paste workflow into one step.
 - Paste selected text to bottom of `try` buffer by default.
 - Without selection, simply open `try` buffer.
 - `try` buffer is merely simple file, not special scratch buffer.
-- Detect grammar from scope of cursor position(e.g. CoffeeScript in Markdown), this ensure you got precise `try` buffer grammar.
 
 # Commands
 - `try:paste`: paste to try file.
@@ -35,6 +35,15 @@ No keymap by default.
 e.g.
 
 * With `F10`
+
+```coffeescript
+disposable = atom.commands.add 'atom-workspace',
+  'check-up': -> fun('up')
+  'check-down': -> fun('down')
+  'check-right': -> fun('right')
+  'check-left': -> fun('left')
+  console.log
+```
 
 ```coffeescript
 'atom-text-editor:not([mini])':

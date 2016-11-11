@@ -1,5 +1,6 @@
 {Disposable, CompositeDisposable} = require 'atom'
 ElementID = 'try-input'
+PlaceHolderText = "extension e.g. js"
 
 # InputBase, InputElementBase
 # -------------------------
@@ -11,9 +12,6 @@ class Input extends HTMLElement
     </div>
     """
     @panel = atom.workspace.addBottomPanel(item: this, visible: false)
-    this
-
-  initialize: (@placeholderText) ->
     this
 
   destroy: ->
@@ -32,7 +30,7 @@ class Input extends HTMLElement
     unless @editorElement
       @editorElement = document.getElementById(ElementID)
       @editor = @editorElement.getModel()
-      @editor.setPlaceholderText(@placeholderText)
+      @editor.setPlaceholderText(PlaceHolderText)
 
     @finished = false
     @panel.show()
