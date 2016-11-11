@@ -1,7 +1,7 @@
 {
   "name": "try",
   "main": "./lib/main",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Paste fragment of code into try buffer then try it!",
   "repository": "https://github.com/t9md/atom-try",
   "license": "MIT",
