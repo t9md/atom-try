@@ -37,15 +37,6 @@ e.g.
 * With `F10`
 
 ```coffeescript
-disposable = atom.commands.add 'atom-workspace',
-  'check-up': -> fun('up')
-  'check-down': -> fun('down')
-  'check-right': -> fun('right')
-  'check-left': -> fun('left')
-  console.log
-```
-
-```coffeescript
 'atom-text-editor:not([mini])':
   'f10': 'try:paste'
 ```

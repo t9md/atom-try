@@ -1,3 +1,6 @@
+## 0.5.0
+- Fix: Deprecation warning calling old `GrammarRegistry.setGrammarOverrideForPath` #2
+
 ## 0.4.0
 - Fix: When extension is not found in scope2extname table, it add unnecessary extra `.` as extension.
 
@@ -21,21 +24,21 @@
 - Fix deprecated API.Prep for Atom 1.0 API
 - Add configuration order.
 
-## 0.2.3 - imporove
+## 0.2.3 - improve
 - scope2extname coverage is now OK.
 - [FIX] scope determination is now precise.
 - [DEPRECATE] deprecate `autosave` option, its difficult to handle.
 - [FIX] no longer depend global `path`.
 
-## 0.2.2 - imporove
+## 0.2.2 - improve
 - New option `try.split` where to open try buffer. default 'none'
 - New option `try.searchAllPanes` to open existing buffer.
 
-## 0.2.1 - imporove
+## 0.2.1 - improve
 - Now `try:paste` open try buffer even if selection is empty
 - New option `try.clearSelection` to clear original selection, default true.
 
-## 0.2.0 - imporove
+## 0.2.0 - improve
 - `select` option (default: true)
 - `autoIndent` option (default: false)
 - deprecated `pasteToBottom` option.
